@@ -3,8 +3,8 @@ import { awsSecretsManagerProvider } from "./aws-secrets-manager-provider.js";
 import { localEncryptedProvider } from "./local-encrypted-provider.js";
 import {
   gcpSecretManagerProvider,
-  vaultProvider,
 } from "./external-stub-providers.js";
+import { vaultProvider } from "./vault-provider.js";
 import type { SecretProviderHealthCheck, SecretProviderModule } from "./types.js";
 import { unprocessable } from "../errors.js";
 

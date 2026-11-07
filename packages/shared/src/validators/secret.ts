@@ -335,12 +335,12 @@ export const createSecretProviderConfigSchema = z.object({
       });
     }
   }
-  const status = value.status ?? (["gcp_secret_manager", "vault"].includes(value.provider) ? "coming_soon" : "ready");
-  if ((value.provider === "gcp_secret_manager" || value.provider === "vault") && status !== "coming_soon" && status !== "disabled") {
+  const status = value.status ?? (value.provider === "gcp_secret_manager" ? "coming_soon" : "ready");
+  if (value.provider === "gcp_secret_manager" && status !== "coming_soon" && status !== "disabled") {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       path: ["status"],
-      message: `${value.provider} provider vaults are locked while coming soon`,
+      message: "gcp_secret_manager provider vaults are locked while coming soon",
     });
   }
   if ((status === "coming_soon" || status === "disabled") && value.isDefault) {

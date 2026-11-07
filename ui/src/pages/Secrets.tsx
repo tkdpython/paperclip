@@ -209,7 +209,7 @@ const PROVIDER_ORDER: SecretProvider[] = [
 ];
 
 function defaultProviderVaultStatus(provider: SecretProvider): SecretProviderConfigStatus {
-  return provider === "gcp_secret_manager" || provider === "vault" ? "coming_soon" : "ready";
+  return provider === "gcp_secret_manager" ? "coming_soon" : "ready";
 }
 
 function emptyProviderVaultForm(provider: SecretProvider = "local_encrypted"): ProviderVaultForm {
@@ -2994,10 +2994,10 @@ export function Secrets() {
                     }));
                   }}
                 >
-                  <option value="ready" disabled={vaultForm.provider === "gcp_secret_manager" || vaultForm.provider === "vault"}>
+                  <option value="ready" disabled={vaultForm.provider === "gcp_secret_manager"}>
                     Ready
                   </option>
-                  <option value="warning" disabled={vaultForm.provider === "gcp_secret_manager" || vaultForm.provider === "vault"}>
+                  <option value="warning" disabled={vaultForm.provider === "gcp_secret_manager"}>
                     Warning
                   </option>
                   <option value="coming_soon">Coming soon</option>
@@ -3035,7 +3035,7 @@ export function Secrets() {
               />
             ) : null}
 
-            {vaultForm.provider === "gcp_secret_manager" || vaultForm.provider === "vault" ? (
+            {vaultForm.provider === "gcp_secret_manager" ? (
               <div className="rounded-md border border-sky-500/30 bg-sky-500/5 p-3 text-xs text-sky-700 dark:text-sky-300">
                 This provider can save draft routing metadata, but runtime writes and resolution stay disabled until
                 the provider module is implemented and reviewed.
@@ -3571,7 +3571,7 @@ export function ProviderVaultsTab({
     id: providerId,
     provider: providerMap.get(providerId),
     Icon: providerFamilyIcon(providerId),
-    isComingSoonFamily: providerId === "gcp_secret_manager" || providerId === "vault",
+    isComingSoonFamily: providerId === "gcp_secret_manager",
     configs: providerConfigs.filter((config) => config.provider === providerId),
   }));
 

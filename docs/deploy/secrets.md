@@ -296,9 +296,8 @@ Each vault carries a status that drives what the runtime can do with it:
 | `coming_soon` | Visible and editable as draft metadata, but locked out of all runtime operations.            |
 | `disabled`    | Soft-deleted. Hidden from the secret create/rotate flow.                                      |
 
-`gcp_secret_manager` and `vault` are pinned to `coming_soon` until their
-runtime modules ship. The settings UI lets you save draft configuration for
-those providers (and surfaces them on the vault list), but secret create,
+`gcp_secret_manager` is pinned to `coming_soon` until its runtime module ships.
+The settings UI lets you save draft configuration for that provider, but secret create,
 rotate, and resolve calls that target a coming-soon vault fail with a clear
 runtime-locked error.
 
@@ -447,9 +446,11 @@ Each provider family has a different backup story:
   role still has `GetSecretValue` plus KMS decrypt for both managed and linked
   user-scoped values. The full restore checklist lives in
   `doc/SECRETS-AWS-PROVIDER.md`.
-- `gcp_secret_manager` and `vault`: while these are coming soon, only the
-  draft vault config exists in Paperclip. Database backups capture it. There
-  is nothing to restore on the provider side until runtime support lands.
+- `gcp_secret_manager`: while this is coming soon, only the draft provider
+  config exists in Paperclip.
+- `vault`: back up the provider config and bindings in the Paperclip database,
+  preserve the external Vault/OpenBao KV namespace independently, and restore
+  the server-side AppRole RoleID/SecretID files before enabling the provider.
 
 ### AWS Provider Bootstrap Boundary
 

@@ -572,11 +572,11 @@ describe("secret routes", () => {
 
   it("rejects ready status for coming-soon provider vaults", async () => {
     const res = await request(createApp()).post("/api/companies/company-1/secret-provider-configs").send({
-      provider: "vault",
-      displayName: "Vault draft",
+      provider: "gcp_secret_manager",
+      displayName: "GCP draft",
       status: "ready",
       config: {
-        address: "https://vault.example.com",
+        projectId: "paperclip-test-project",
       },
     });
 

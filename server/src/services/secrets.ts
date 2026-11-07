@@ -1398,6 +1398,8 @@ export function secretService(db: Db | DbTransaction) {
           secretId: secret.id,
           secretKey: secret.key,
           version: resolvedVersion,
+          consumerType: accessContext?.consumerType ?? bindingContext?.consumerType ?? null,
+          consumerId: accessContext?.consumerId ?? bindingContext?.consumerId ?? null,
         },
       });
       await Promise.all([

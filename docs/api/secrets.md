@@ -227,8 +227,8 @@ Per-provider `config` shapes:
   `mountPath`, `secretPathPrefix`. `address` values with embedded credentials,
   paths, query strings, or fragments are rejected.
 
-`status` defaults to `ready` for `local_encrypted` and `aws_secrets_manager`,
-and to `coming_soon` for `gcp_secret_manager` and `vault`. Coming-soon and
+`status` defaults to `ready` for `local_encrypted`, `aws_secrets_manager`, and
+`vault`, and to `coming_soon` for `gcp_secret_manager`. Coming-soon and
 disabled vaults cannot be marked `isDefault`. Setting `isDefault: true` clears
 the previous default for the same provider in the same transaction.
 
@@ -252,9 +252,10 @@ PATCH /api/secret-provider-configs/{id}
 ```
 
 `config` is replaced wholesale on update — pass the full provider config
-payload, not a partial diff. Status transitions for `gcp_secret_manager` and
-`vault` are constrained to `coming_soon` and `disabled` until their runtime
-modules ship.
+payload, not a partial diff. Status transitions for `gcp_secret_manager` are constrained to `coming_soon`
+and `disabled` until its runtime module ships. Vault/OpenBao is a read-only
+external-reference provider; its AppRole credentials are supplied to the
+server through protected files rather than persisted in provider config.
 
 ### Disable Vault
 

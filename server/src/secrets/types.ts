@@ -108,6 +108,8 @@ export interface SecretProviderRuntimeContext {
   secretId: string;
   secretKey: string;
   version: number;
+  consumerType?: string | null;
+  consumerId?: string | null;
 }
 
 export interface SecretProviderVaultRuntimeConfig {
